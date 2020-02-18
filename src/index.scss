@@ -1,0 +1,230 @@
+$primary-color: #000;
+$secondary-color: #fff;
+$content-padding: 20px;
+$title-font-size: 1.2rem;
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(72deg, white 50%, rgba(204, 204, 204, 0.6) 100%);
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+.btn {
+  box-shadow: none;
+  border-width: 1px;
+  border-radius: 5px;
+  outline: none;
+  padding: 6px 20px;
+  background: transparent;
+  border-style: solid;
+  cursor: pointer;
+}
+.btn-outline-primary {
+  @extend .btn;
+  border-color: $secondary-color;
+  color: $secondary-color;
+}
+
+.btn-outline-secondary {
+  @extend .btn;
+  border-color: $primary-color;
+  color: $primary-color;
+}
+
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+}
+
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  -webkit-clip-path: none;
+  clip-path: none;
+}
+
+.messenger {
+  &__header {
+    padding: 10px $content-padding;
+  }
+
+  &__flex-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 50px;
+  }
+
+  &__content {
+    padding: $content-padding;
+    padding-bottom: 0;
+  }
+}
+
+
+/*-----------------------------------
+| FEEDBACK SCREEN
+------------------------------------*/
+.feedback {
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-size: $title-font-size;
+  }
+
+  &__text-wrapper {
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    position: relative;
+    overflow-x: auto;
+    align-items: flex-end;
+    word-break: break-all;
+  }
+
+  &__text-holder {
+    line-break: auto;
+    line-height: 1.2;
+  }
+
+  &__textarea {
+    background: transparent;
+    border: none;
+    height: auto;
+    font-size: 60px;
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &__input-control {
+    &--message {
+      height: calc(100vh - 420px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    &--submit-button {
+      padding-top: 50px;
+    }
+  }
+
+  &__bg-black-block {
+    background: rgba(204, 204, 204, 1);
+    background: -moz-linear-gradient(345deg, #cccccc 0%, black 90%);
+    background: -webkit-linear-gradient(345deg, #cccccc 0%, black 90%);
+    background: linear-gradient(345deg, #cccccc 0%, black 90%);
+    height: calc(100vh / 2.7);
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 20px 20px;
+  }
+
+  &__caracteres-counter {
+    color: $secondary-color;
+    margin: 0;
+  }
+}
+
+/*-----------------------------------
+| ASK PERMISSION SCREEN
+\-----------------------------------*/
+
+.ask-contact {
+  padding-top: 50px;
+
+  &__title {
+    font-size: 40px;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+  }
+
+  &__button-group {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    .btn {
+      margin-right: 30px;
+    }
+  }
+}
+
+
+/*-----------------------------------
+| THANKS SCREEN
+\-----------------------------------*/
+
+.thanks {
+  padding-top: 50px;
+
+  &__title {
+    font-size: 40px;
+    padding-bottom: 5px;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    padding-bottom: 60px;
+  }
+}
+
+/*-----------------------------------
+| WELCOME BACK SCREEN
+\-----------------------------------*/
+.welcome-back {
+  padding-top: 50px;
+
+  &__title {
+    font-size: 40px;
+    padding-bottom: 5px;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    padding-bottom: 60px;
+  }
+
+  &__button-group {
+    max-width: 200px;
+    padding-top: 10px;
+    .btn {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }
+}
