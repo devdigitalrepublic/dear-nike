@@ -2,14 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Success } from "./components"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { All, Untagged, Tagged } from "./screens";
 
 ReactDOM.render(
   <Router>
     <div className="app-container">
-      <Route exact path="/" component={App}></Route>
-      <Route exact path="/thanks" component={Success}></Route>
+      <Switch>
+        <Route exact path="/" component={All}></Route>
+        <Route exact path="/tagged" component={Tagged}></Route>
+        <Route exact path="/untagged" component={Untagged}></Route>
+        <Route exact path="/feedback" component={App}></Route>
+      </Switch>
     </div>
   </Router>,
   document.getElementById("root")

@@ -1,9 +1,14 @@
 import React from "react";
-import Feedback from "./components/Feedback";
+import Feedback from "./screens/Feedback";
 import firebase from "./Firebase";
-import { generateMessageId } from "./helpers";
-import { AskContactPermission, Success, WelcomeBack } from "./components";
+import "bootstrap/dist/css/bootstrap.min.css";
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 class App extends React.Component {
   unsubscribe = null;
   lastMessageId = 0;
@@ -18,21 +23,20 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ref = firebase.firestore().collection("messages");
     this.onNewFeedback = this.onNewFeedback.bind(this);
     this.onSubmitPermission = this.onSubmitPermission.bind(this);
     this.onNewFeedback = this.onNewFeedback.bind(this);
-    this.onDeleteFeedback = this.onDeleteFeedback.bind(this)
+    this.onDeleteFeedback = this.onDeleteFeedback.bind(this);
   }
 
   async componentDidMount() {
     //this.userId = Math.floor(Math.random() * 10 + 1);
-    console.log(this.userId);
-    const userLastFeedback = await this.getLastMessage(this.userId);
-    console.log(userLastFeedback);
-    this.setState({
-      userLastFeedback
-    });
+    // console.log(this.userId);
+    // const userLastFeedback = await this.getLastMessage(this.userId);
+    // console.log(userLastFeedback);
+    // this.setState({
+    //   userLastFeedback
+    // });
   }
 
   getLastMessage(userId = null) {
@@ -53,19 +57,22 @@ class App extends React.Component {
 
   onSubmitFeedback = async text => {
     try {
-      var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
-      const lastMessage = await this.getLastMessage();
-      this.code = generateMessageId(lastMessage ? lastMessage.id : 0);
+      //const lastMessage = await this.getLastMessage();
+      this.ref = firebase
+        .database()
+        .ref("/user-data")
+        .push();
       this.message = {
-        text,
-        user_id: this.userId,
-        user_type: "facebook",
-        user_name: "Test",
-        timestamp
+        message: text,
+        upmID: uuidv4(),
+        createdAt: new Date().toJSON(),
+        id: this.ref.key,
+        tagged: false
       };
-      await this.ref.doc(this.code).set(this.message);
+      await this.ref.set(this.message);
       this.setState({ messageSent: true });
     } catch (err) {
+      console.log(err);
       alert("We were unable to record your feedback. Try again later.");
     }
   };
@@ -89,30 +96,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { messageSent, permissionSent, userLastFeedback } = this.state;
-    return (
-      <>
-        {userLastFeedback ? (
-          <WelcomeBack
-            firebaseRef={this.ref}
-            feedback={userLastFeedback}
-            onNew={this.onNewFeedback.bind(this)}
-            onDelete={this.onDeleteFeedback.bind(this)}
-          />
-        ) : !messageSent ? (
-          <Feedback onSubmit={this.onSubmitFeedback} />
-        ) : !permissionSent ? (
-          <AskContactPermission
-            messageRef={this.code}
-            firebaseRef={this.ref}
-            message={this.message}
-            onSubmit={this.onSubmitPermission}
-          />
-        ) : (
-          <Success />
-        )}
-      </>
-    );
+    return <Feedback onSubmit={this.onSubmitFeedback} />;
   }
 }
 

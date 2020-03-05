@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./Layout";
+import { Layout } from "../components";
 
 class Feedback extends React.Component {
   maxLength = 346;
@@ -88,7 +88,7 @@ class Feedback extends React.Component {
               {500 - this.state.messageLength} characteres remaining
             </p>
             <div className="feedback__input-control feedback__input-control--submit-button">
-              <button type="submit" className="btn btn-outline-primary" disabled={this.state.text.length == 0}>
+              <button type="submit" className="btn btn-outline-primary" disabled={this.state.text.length === 0}>
                 Send to Nike
               </button>
             </div>
